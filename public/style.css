@@ -1,0 +1,67 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Font Classes */
+.font-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.font-bold-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.font-body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.font-body-light {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+/* Color Variables */
+:root {
+    --orchid-dark: #013220;
+    --orchid-light: #0a4d2e;
+    --gold-primary: #CC9933;
+    --gold-light: #e0b450;
+}
+
+.orchid-bg {
+    background-color: var(--orchid-dark);
+}
+
+.gold-bg {
+    background-color: var(--gold-primary);
+}
+
+.orchid-gradient {
+    background: linear-gradient(135deg, var(--orchid-dark) 0%, var(--orchid-light) 100%);
+}
+
+.gold-gradient {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
+}
+
+/* Focus Styles */
+.focus-gold:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: var(--gold-primary);
+}
+
+/* Custom Utilities */
+.text-orchid {
+    color: var(--orchid-dark);
+}
+
+.text-gold {
+    color: var(--gold-primary);
+}
