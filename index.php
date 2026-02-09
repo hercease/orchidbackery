@@ -36,6 +36,7 @@ $routes = [
     // GET Routes (Page Views)
     'GET' => [
         // Home & Auth Pages
+        '/' => fn() => $viewController->showDashboardPage($rootUrl),
         '/login' => fn() => $viewController->showLoginPage($rootUrl),
         '/register' => fn() => $viewController->showRegistrationPage($rootUrl),
         '/dashboard' => fn() => $viewController->showDashboardPage($rootUrl),
