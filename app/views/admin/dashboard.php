@@ -194,10 +194,10 @@
                                             <th class="text-left p-4 text-sm font-medium text-gray-600">User</th>
                                             <th class="text-left p-4 text-sm font-medium text-gray-600">Points</th>
                                             <th class="text-left p-4 text-sm font-medium text-gray-600">Status</th>
-                                            <th class="text-left p-4 text-sm font-medium text-gray-600">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php foreach ($recentRegistrations as $user): ?>
                                         <tr class="border-b border-gray-100 hover:bg-gray-50">
                                             <td class="p-4">
                                                 <div class="flex items-center">
@@ -205,87 +205,19 @@
                                                         <i class="fas fa-user text-gray-500"></i>
                                                     </div>
                                                     <div>
-                                                        <p class="font-medium">Alex Johnson</p>
-                                                        <p class="text-xs text-gray-500">alex@example.com</p>
+                                                        <p class="font-medium"><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></p>
+                                                        <p class="text-xs text-gray-500"><?php echo $user['email']; ?></p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="p-4">
-                                                <span class="font-bold">1,250</span>
+                                                <span class="font-bold"><?php echo $user['points_balance']; ?></span>
                                             </td>
                                             <td class="p-4">
-                                                <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Active</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <button class="text-sm text-orchid-dark font-medium">Manage</button>
+                                                <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800"><?php echo $user['status']; ?></span>
                                             </td>
                                         </tr>
-                                        <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                            <td class="p-4">
-                                                <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                                                        <i class="fas fa-user text-gray-500"></i>
-                                                    </div>
-                                                    <div>
-                                                        <p class="font-medium">Maria Garcia</p>
-                                                        <p class="text-xs text-gray-500">maria@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="p-4">
-                                                <span class="font-bold">850</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Active</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <button class="text-sm text-orchid-dark font-medium">Manage</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                            <td class="p-4">
-                                                <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                                                        <i class="fas fa-user text-gray-500"></i>
-                                                    </div>
-                                                    <div>
-                                                        <p class="font-medium">David Chen</p>
-                                                        <p class="text-xs text-gray-500">david@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="p-4">
-                                                <span class="font-bold">2,150</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <span class="px-2 py-1 rounded-full text-xs bg-yellow-100 text-yellow-800">Pending</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <button class="text-sm text-orchid-dark font-medium">Manage</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-50">
-                                            <td class="p-4">
-                                                <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                                                        <i class="fas fa-user text-gray-500"></i>
-                                                    </div>
-                                                    <div>
-                                                        <p class="font-medium">Sarah Williams</p>
-                                                        <p class="text-xs text-gray-500">sarah@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="p-4">
-                                                <span class="font-bold">3,450</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Active</span>
-                                            </td>
-                                            <td class="p-4">
-                                                <button class="text-sm text-orchid-dark font-medium">Manage</button>
-                                            </td>
-                                        </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -299,17 +231,17 @@
                                 <h3 class="font-bold text-gray-800">Quick Actions</h3>
                             </div>
                             <div class="p-5 space-y-4">
-                                <a href="#" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-dark/20 hover:bg-orchid-dark/5" onclick="handleQuickAction(this)">
+                                <a href="manage_users" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-dark/20 hover:bg-orchid-dark/5" onclick="handleQuickAction(this)">
                                     <div class="flex items-center">
                                         <div class="w-10 h-10 rounded-full bg-orchid-dark/10 flex items-center justify-center mr-3">
                                             <i class="fas fa-user-plus text-orchid-dark"></i>
                                         </div>
-                                        <span class="font-medium">Register New User</span>
+                                        <span class="font-medium">Manager users</span>
                                     </div>
                                     <i class="fas fa-chevron-right text-gray-400"></i>
                                 </a>
                                 
-                                <a href="#" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-gold/20 hover:bg-orchid-gold/5" onclick="handleQuickAction(this)">
+                                <a href="manage_partners" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-gold/20 hover:bg-orchid-gold/5">
                                     <div class="flex items-center">
                                         <div class="w-10 h-10 rounded-full bg-orchid-gold/10 flex items-center justify-center mr-3">
                                             <i class="fas fa-store text-orchid-gold"></i>
@@ -319,17 +251,17 @@
                                     <i class="fas fa-chevron-right text-gray-400"></i>
                                 </a>
                                 
-                                <a href="#" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-dark/20 hover:bg-orchid-dark/5" onclick="handleQuickAction(this)">
+                                <a href="point_configuration" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-dark/20 hover:bg-orchid-dark/5">
                                     <div class="flex items-center">
                                         <div class="w-10 h-10 rounded-full bg-orchid-dark/10 flex items-center justify-center mr-3">
                                             <i class="fas fa-coins text-orchid-dark"></i>
                                         </div>
-                                        <span class="font-medium">Adjust User Points</span>
+                                        <span class="font-medium">Pionts Configuration</span>
                                     </div>
                                     <i class="fas fa-chevron-right text-gray-400"></i>
                                 </a>
                                 
-                                <a href="#" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-gold/20 hover:bg-orchid-gold/5" onclick="handleQuickAction(this)">
+                                <!--<a href="#" class="quick-action flex items-center justify-between p-3 rounded-lg border border-orchid-gold/20 hover:bg-orchid-gold/5">
                                     <div class="flex items-center">
                                         <div class="w-10 h-10 rounded-full bg-orchid-gold/10 flex items-center justify-center mr-3">
                                             <i class="fas fa-money-check-alt text-orchid-gold"></i>
@@ -337,34 +269,10 @@
                                         <span class="font-medium">Process Withdrawals</span>
                                     </div>
                                     <i class="fas fa-chevron-right text-gray-400"></i>
-                                </a>
+                                </a>-->
                             </div>
                         </div>
                         
-                        <!-- System Status -->
-                        <div class="bg-white rounded-xl shadow overflow-hidden">
-                            <div class="p-5 border-b border-gray-100">
-                                <h3 class="font-bold text-gray-800">System Status</h3>
-                            </div>
-                            <div class="p-5 space-y-4">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">Platform Uptime</span>
-                                    <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-800">99.7%</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">API Response Time</span>
-                                    <span class="px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-800">142ms</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">Active Sessions</span>
-                                    <span class="px-3 py-1 rounded-full text-xs bg-purple-100 text-purple-800">247</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">Database Load</span>
-                                    <span class="px-3 py-1 rounded-full text-xs bg-yellow-100 text-yellow-800">Medium</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
@@ -373,10 +281,6 @@
                     <div class="bg-white rounded-xl shadow overflow-hidden">
                         <div class="p-5 border-b border-gray-100 flex justify-between items-center">
                             <h3 class="font-bold text-gray-800">Recent Transactions</h3>
-                            <div class="flex space-x-2">
-                                <button class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300">Filter</button>
-                                <button class="px-4 py-2 text-sm font-medium rounded-lg btn-primary">Export CSV</button>
-                            </div>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
@@ -385,72 +289,22 @@
                                         <th class="text-left p-4 text-sm font-medium text-gray-600">Date/Time</th>
                                         <th class="text-left p-4 text-sm font-medium text-gray-600">User</th>
                                         <th class="text-left p-4 text-sm font-medium text-gray-600">Type</th>
-                                        <th class="text-left p-4 text-sm font-medium text-gray-600">Points</th>
-                                        <th class="text-left p-4 text-sm font-medium text-gray-600">Partner</th>
                                         <th class="text-left p-4 text-sm font-medium text-gray-600">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach ($recentActivity as $activity): ?>
                                     <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                        <td class="p-4 text-sm">15 Nov, 10:15 AM</td>
-                                        <td class="p-4 font-medium">Alex Johnson</td>
+                                        <td class="p-4 text-sm"><?= date('M j, Y h:i A', strtotime($activity['created_at'])); ?></td>
+                                        <td class="p-4 font-medium"><?= $activity['first_name'] . ' ' . $activity['last_name']; ?></td>
                                         <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">Redemption</span>
+                                            <span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800"><?= $activity['type']; ?></span>
                                         </td>
-                                        <td class="p-4 font-bold text-orchid-gold">-250</td>
-                                        <td class="p-4">Coffee Haven</td>
                                         <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Completed</span>
+                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800"><?= $activity['status']; ?></span>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                        <td class="p-4 text-sm">15 Nov, 09:42 AM</td>
-                                        <td class="p-4 font-medium">Maria Garcia</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Earned</span>
-                                        </td>
-                                        <td class="p-4 font-bold text-green-600">+100</td>
-                                        <td class="p-4">Orchid Bakery</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                        <td class="p-4 text-sm">14 Nov, 04:30 PM</td>
-                                        <td class="p-4 font-medium">David Chen</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">Redemption</span>
-                                        </td>
-                                        <td class="p-4 font-bold text-orchid-gold">-500</td>
-                                        <td class="p-4">Urban Cafe</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                        <td class="p-4 text-sm">14 Nov, 02:15 PM</td>
-                                        <td class="p-4 font-medium">Sarah Williams</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">Manual Adj.</span>
-                                        </td>
-                                        <td class="p-4 font-bold text-green-600">+200</td>
-                                        <td class="p-4">Admin Adjustment</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="p-4 text-sm">14 Nov, 11:05 AM</td>
-                                        <td class="p-4 font-medium">James Wilson</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Earned</span>
-                                        </td>
-                                        <td class="p-4 font-bold text-green-600">+150</td>
-                                        <td class="p-4">Orchid Bakery</td>
-                                        <td class="p-4">
-                                            <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Completed</span>
-                                        </td>
-                                    </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

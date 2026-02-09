@@ -115,6 +115,8 @@ class ViewController
         $partnersStat = $this->coreModel->getPartnerStats($fetchuserdetails['id']);
         $recentRedemptions = [];
         $fetchexchangerate = $this->coreModel->fetchRate('redeem_points_rate');
+        $recentRegistrations = $this->coreModel->fetchRecentRegistrations();
+        $recentActivity = $this->coreModel->fetchRecentActivity();
         switch($fetchuserdetails['acct_type']){
             case 'admin':
                 require_once 'app/views/admin/dashboard.php';

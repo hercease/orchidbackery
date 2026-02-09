@@ -25,21 +25,21 @@
                     </div>
                     <div>
                         <p class="font-medium">Admin User</p>
-                        <p class="text-xs text-gray-300">Super Administrator</p>
+                        <?php if($fetchuserdetails['isAdmin'] > 0): ?><p class="text-xs text-gray-300">Super Administrator</p><?php endif; ?>
                     </div>
                 </div>
             </div>
             
             <!-- Navigation -->
             <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
-                <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg bg-orchid-gold/10" onclick="setActiveLink(this)">
+                <a href="dashboard" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg bg-orchid-gold/10">
                     <i class="fas fa-tachometer-alt w-5"></i>
                     <span>Dashboard</span>
                 </a>
                 
                 <div class="pt-4">
                     <p class="text-xs uppercase text-gray-400 tracking-wider mb-2">User Management</p>
-                    <a href="manage_users" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="manage_users" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-users w-5"></i>
                         <span>Manage Users</span>
                     </a>
@@ -47,7 +47,7 @@
                 
                 <div class="pt-2">
                     <p class="text-xs uppercase text-gray-400 tracking-wider mb-2">Partner Management</p>
-                    <a href="manage_partners" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="manage_partners" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-handshake w-5"></i>
                         <span>Manage Partners</span>
                     </a>
@@ -55,11 +55,11 @@
                 
                 <div class="pt-2">
                     <p class="text-xs uppercase text-gray-400 tracking-wider mb-2">Points & Rewards</p>
-                    <a href="point_award" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="point_award" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-coins w-5"></i>
                         <span>Point Award</span>
                     </a>
-                    <a href="point_configuration" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="point_configuration" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-coins w-5"></i>
                         <span>Points Configuration</span>
                     </a>
@@ -67,7 +67,7 @@
                 
                 <div class="pt-2">
                     <p class="text-xs uppercase text-gray-400 tracking-wider mb-2">Financial Management</p>
-                    <a href="withdrawal_requests" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="withdrawal_requests" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-money-check-alt w-5"></i>
                         <span>Withdrawal Requests</span>
                     </a>
@@ -75,7 +75,7 @@
                 
                 <div class="pt-2">
                     <p class="text-xs uppercase text-gray-400 tracking-wider mb-2">Reporting</p>
-                    <a href="activity_logs" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="activity_logs" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-history w-5"></i>
                         <span>Transaction Logs</span>
                     </a>
@@ -83,7 +83,7 @@
                 
                 <div class="pt-2">
                     <p class="text-xs uppercase text-gray-400 tracking-wider mb-2">System</p>
-                    <a href="control_access" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg" onclick="setActiveLink(this)">
+                    <a href="control_access" class="sidebar-link flex items-center space-x-3 p-3 rounded-lg">
                         <i class="fas fa-shield-alt w-5"></i>
                         <span>Access Control</span>
                     </a>
@@ -92,7 +92,7 @@
             
             <!-- Logout -->
             <div class="p-4 border-t border-orchid-gold/30">
-                <a href="logout" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-red-900/30" onclick="setActiveLink(this)">
+                <a href="logout" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-red-900/30">
                     <i class="fas fa-sign-out-alt w-5"></i>
                     <span>Logout</span>
                 </a>

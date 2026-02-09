@@ -239,7 +239,7 @@ class CoreModel
     }
 
     public function fetchUserData($email){
-        $stmt = $this->db->prepare("SELECT id, first_name, last_name, email, phone, points_balance, password_hash, wallet_balance, logo, location, status, created_at, acct_type FROM users WHERE email = ?");
+        $stmt = $this->db->prepare("SELECT id, first_name, last_name, email, phone, points_balance, password_hash, wallet_balance, logo, location, status, created_at, acct_type, isAdmin FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -2744,10 +2744,11 @@ class CoreModel
             }
 
             $reference = 'PA-' . date('Ymd') . '-' . strtoupper(uniqid());
-            $userdescription = "Point award for the purchase of $amount bread. Points: $points"; 
+            $userdescription = "Point award for the purchase of $amount bread. Points: $points";
+            $title = "Point award";
 
-            $stmt = $this->db->prepare("INSERT INTO transaction_history (user_id, amount, points, type, reference, description) VALUES (?, ?, ?, 'point_award', ?, ?)");
-            $stmt->bind_param("sdiss", $checkEmail['id'], $amount, $points, $reference, $userdescription);
+            $stmt = $this->db->prepare("INSERT INTO transaction_history (user_id, title, amount, points, type, reference, description) VALUES (?, ?, ?, ?, 'point_award', ?, ?)");
+            $stmt->bind_param("isdiss", $checkEmail['id'], $title, $amount, $points, $reference, $userdescription);
             $result = $stmt->execute();
 
             //Insert into admin logs too
@@ -3111,6 +3112,22 @@ class CoreModel
             'message' => 'Code redeemed successfully',
             'new_balance' => $new_wallet_balance
         ];
+    }
+
+    public function fetchRecentRegistrations(){
+        $stmt = $this->db->prepare("SELECT * FROM users ORDER BY created_at DESC LIMIT 5");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function fetchRecentActivity(){
+        $stmt = $this->db->prepare("SELECT u.id, u.first_name, u.last_name, th.created_at, th.type, th.points, th.status FROM transaction_history th LEFT JOIN users u ON th.user_id = u.id ORDER BY th.created_at DESC LIMIT 5");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
