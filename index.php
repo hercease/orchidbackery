@@ -91,6 +91,7 @@ $routes = [
         '/forgot_password_reset' => fn() => $coreController->forgotPasswordResetRequest(),
         '/redeem_code' => fn() => $coreController->redeemCode(),
         '/process_code_redemption' => fn() => $coreController->partnerCodeRedemption(),
+        '/create_admin_account' => fn() => $coreController->createAdminAccount(),
 
     ]
 ];

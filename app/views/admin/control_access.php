@@ -224,12 +224,24 @@
                         <!-- Name -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Full Name *
+                                FirstName *
                             </label>
                             <input type="text" 
-                                   id="adminName"
+                                   id="firstName"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orchid-dark focus:border-transparent"
-                                   required>
+                                   name="firstName"
+                                   required />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                LastName *
+                            </label>
+                            <input type="text" 
+                                   id="lastName"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orchid-dark focus:border-transparent"
+                                   name="lastName"
+                                   required />
                         </div>
                         
                         <!-- Email -->
@@ -237,10 +249,11 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Email Address *
                             </label>
-                            <input type="email" 
+                             <input type="email" 
                                    id="adminEmail"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orchid-dark focus:border-transparent"
-                                   required>
+                                   name="adminEmail"
+                                   required />
                         </div>
                         
                         <!-- Submit Button -->
@@ -280,9 +293,6 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button onclick="refreshData()" class="p-2 rounded-lg border border-gray-300 hover:bg-gray-50" id="refreshBtn">
-                        <i class="fas fa-sync-alt text-gray-600"></i>
-                    </button>
                     <button onclick="openAddAdminModal()" class="px-4 py-2 rounded-lg btn-primary">
                         <i class="fas fa-user-plus mr-2"></i> Add Admin
                     </button>
@@ -577,6 +587,7 @@
                         </div>
                         
                         <!-- Card Footer - Actions -->
+                        ${admin.isAdmin === false ? `
                         <div class="p-6 bg-gray-50 border-t border-gray-100">
                             <div class="flex space-x-3">
                                 <button onclick="toggleAdminStatus(${admin.id}, '${admin.name}')" 
@@ -591,6 +602,7 @@
                                 </button>
                             </div>
                         </div>
+                        ` : ''}
                     </div>
                 `;
             });
@@ -716,7 +728,7 @@
             const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('adminEmail').value.trim();
             
-            if (!name || !email) {
+            if (!firstName || !lastName || !email) {
                 showNotification('Please fill in all required fields', 'warning');
                 return;
             }
@@ -748,6 +760,7 @@
                 });
                 
                 const result = await response.json();
+                console.log(result);
                 
                 if (result.status) {
                     showNotification(`Admin ${firstName} created successfully`, 'success');
@@ -756,7 +769,7 @@
                     // Refresh data
                     await fetchAdmins();
                 } else {
-                    throw new Error(result.error || 'Failed to create admin');
+                    throw new Error(result.message || 'Failed to create admin');
                 }
                 
             } catch (error) {
@@ -779,23 +792,25 @@
             if (!confirm(`Are you sure you want to toggle status for ${adminName}?`)) return;
             
             try {
-                const response = await fetch('/api/toggle_admin_status', {
+                const response = await fetch('update_account_status', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: JSON.stringify({
-                        admin_id: adminId
+                    body: new URLSearchParams({
+                        partner_id: adminId,
+                        status: allAdmins.find(admin => admin.id === adminId).status === 'active' ? 'inactive' : 'active',
+                        // status: allAdmins.find(admin => admin.id === adminId).status === 'active' ? 'inactive' : 'active'
                     })
                 });
                 
                 const result = await response.json();
                 
-                if (result.success) {
+                if (result.status) {
                     showNotification(`Admin status toggled successfully`, 'success');
                     await fetchAdmins();
                 } else {
-                    throw new Error(result.error || 'Failed to toggle admin status');
+                    throw new Error(result.message || 'Failed to toggle admin status');
                 }
                 
             } catch (error) {
@@ -809,23 +824,24 @@
             if (!confirm(`Permanently delete ${adminName}? This action cannot be undone.`)) return;
             
             try {
-                const response = await fetch('/api/delete_admin', {
+                const response = await fetch('delete_user', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: JSON.stringify({
-                        admin_id: adminId
+                    body: new URLSearchParams({
+                        id : adminId,
+                        action: 'delete_admin'
                     })
                 });
                 
                 const result = await response.json();
                 
-                if (result.success) {
+                if (result.status) {
                     showNotification(`Admin deleted successfully`, 'success');
                     await fetchAdmins();
                 } else {
-                    throw new Error(result.error || 'Failed to delete admin');
+                    throw new Error(result.message || 'Failed to delete admin');
                 }
                 
             } catch (error) {
@@ -840,12 +856,12 @@
             document.getElementById('adminsGrid').innerHTML = '';
             document.getElementById('emptyState').classList.add('hidden');
             document.getElementById('errorState').classList.add('hidden');
-            document.getElementById('refreshBtn').classList.add('fa-spin');
+            //document.getElementById('refreshBtn').classList.add('fa-spin');
         }
         
         function hideLoading() {
             document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('refreshBtn').classList.remove('fa-spin');
+            //document.getElementById('refreshBtn').classList.remove('fa-spin');
         }
         
         function showEmptyState() {

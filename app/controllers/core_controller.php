@@ -110,14 +110,27 @@ class CoreController {
                 throw new Exception("Session not found.");
             }
 
-            $permission = $this->coreModel->checkPermissionRole($fetchuserdetails['id'], 'users.delete');
-            if($fetchuserdetails['isAdmin'] == 0 && $permission == false){
-                throw new Exception("You do not have permission to delete users.");
+            $action = $_POST['action'] ?? '';
+
+            if($action == 'delete_user'){
+                $permission = $this->coreModel->checkPermissionRole($fetchuserdetails['id'], 'users.delete');
+                if($fetchuserdetails['isAdmin'] == 0 && $permission == false){
+                    throw new Exception("You do not have permission to delete users.");
+                }
             }
 
-            $permission = $this->coreModel->checkPermissionRole($fetchuserdetails['id'], 'partners.delete');
-            if($fetchuserdetails['isAdmin'] == 0 && $permission == false){
-                throw new Exception("You do not have permission to delete partners.");
+            if($action == 'delete_partners'){
+                $permission = $this->coreModel->checkPermissionRole($fetchuserdetails['id'], 'partners.delete');
+                if($fetchuserdetails['isAdmin'] == 0 && $permission == false){
+                    throw new Exception("You do not have permission to delete partners.");
+                }
+            }
+
+            if($action == 'delete_admins'){
+                $permission = $this->coreModel->checkPermissionRole($fetchuserdetails['id'], 'admins.delete');
+                if($fetchuserdetails['isAdmin'] == 0 && $permission == false){
+                    throw new Exception("You do not have permission to delete admins.");
+                }
             }
 
             $id = (int)$_POST['id'];
@@ -829,13 +842,13 @@ class CoreController {
         }
     }
 
-    public function createAdmin(){
+    public function createAdminAccount(){
         try {
 
             session_start();
             $email = $this->coreModel->sanitizeInput($_POST['email']);
-            $first_name = $this->coreModel->sanitizeInput($_POST['first_name']);
-            $last_name = $this->coreModel->sanitizeInput($_POST['last_name']);
+            $first_name = $this->coreModel->sanitizeInput($_POST['firstname']);
+            $last_name = $this->coreModel->sanitizeInput($_POST['lastname']);
 
             $user = $this->coreModel->fetchUserData($email);
             if ($user) {
@@ -854,8 +867,8 @@ class CoreController {
                 throw new Exception("Last name can only contain letters, apostrophes, and hyphens.");
             }
 
-            $email = $_SESSION['orchid_session'] ?? null;
-            $fetchuserdetails = $this->coreModel->fetchUserData($email);
+            $loggingemail = $_SESSION['orchid_session'] ?? null;
+            $fetchuserdetails = $this->coreModel->fetchUserData($loggingemail);
 
             $permission = $this->coreModel->checkPermissionRole($fetchuserdetails['id'], 'admins.create');
             if($fetchuserdetails['isAdmin'] == 0 && $permission == false){

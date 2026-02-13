@@ -1378,6 +1378,7 @@
             
             const formData = new FormData();
             formData.append('id', partnerToDelete.id);
+            formData.append('action', 'delete_partners');
             
             fetch('delete_user', {
                 method: 'POST',

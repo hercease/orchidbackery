@@ -1734,7 +1734,7 @@ class CoreModel
 
     public function processAccountStatusUpdate($partnerId, $status) {
         $response = ['status' => false, 'message' => ''];
-        session_start();
+      
         $adminInfo = $this->fetchUserData($_SESSION['orchid_session']);
         $acctInfo = $this->fetchUser($partnerId);
         try{
@@ -2791,7 +2791,8 @@ class CoreModel
                     u.id,
                     CONCAT(u.first_name, ' ', u.last_name) as name,
                     u.email,
-                    u.status
+                    u.status,
+                    u.isAdmin
                 FROM users u
                 WHERE u.acct_type = 'admin'
                 ORDER BY u.first_name, u.last_name";
@@ -2804,7 +2805,8 @@ class CoreModel
                 'id' => intval($row['id']),
                 'name' => $row['name'],
                 'email' => $row['email'],
-                'status' => $row['status']
+                'status' => $row['status'],
+                'isAdmin' => boolval($row['isAdmin'])
             ];
             
             // Get permissions for this admin
@@ -2994,7 +2996,7 @@ class CoreModel
     }
 
     public function processCreateAdmin($first_name, $last_name, $email) {
-        $stmt = $this->db->prepare("INSERT INTO admin (first_name, last_name, email, acct_type) VALUES (?, ?, ?, 'admin')");
+        $stmt = $this->db->prepare("INSERT INTO users (first_name, last_name, email, acct_type, status) VALUES (?, ?, ?, 'admin', 'active')");
         $stmt->bind_param("sss", $first_name, $last_name, $email);
         $stmt->execute();
         $stmt->close();
